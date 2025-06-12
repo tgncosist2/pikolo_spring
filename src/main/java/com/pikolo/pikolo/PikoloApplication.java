@@ -1,4 +1,4 @@
-package com.pikolo.pikolo.pikolo;
+package com.pikolo.pikolo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

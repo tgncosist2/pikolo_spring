@@ -4,5 +4,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.pikolo.pikolo.entity.Items;
 
-public interface ItemRepository extends JpaRepository<Items, String>{
+public interface ItemRepository extends JpaRepository<Items, Integer>{
 }

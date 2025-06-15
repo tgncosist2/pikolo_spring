@@ -8,4 +8,9 @@
     SELECT * FROM USERS_ACCOUNT
     WHERE USER_EMAIL = #{userEmail} AND USER_PASSWORD = #{userPassword}
 </select>
+<update id="updateUserLoginDate" parameterType="java.util.Map">
+    UPDATE USERS_ACCOUNT
+    SET LAST_LOGIN_IP = #{clientIp}, LAST_LOGIN_DATE = SYSDATE
+    WHERE USER_EMAIL = #{userEmail}
+</update>
 </mapper>

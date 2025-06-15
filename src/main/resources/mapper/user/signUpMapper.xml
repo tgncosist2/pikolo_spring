@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pikolo.pikolo.mapper.user.SignUpDAO">
+<insert id="insertSignUp" parameterType="com.pikolo.pikolo.dto.user.SignUpDTO">
+    INSERT INTO USERS_ACCOUNT
+    (USER_ID, USER_EMAIL, USER_NAME, USER_PASSWORD, USER_NICKNAME, INPUT_IP)
+    VALUES
+    (SEQ_USER_ID.NEXTVAL, #{userEmail}, #{userName}, #{userPassword}, #{userNickname}, #{inputIp})
+</insert>
+</mapper>

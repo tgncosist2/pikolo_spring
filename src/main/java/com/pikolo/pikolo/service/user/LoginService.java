@@ -1,5 +1,7 @@
 package com.pikolo.pikolo.service.user;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,5 +18,9 @@ public class LoginService {
     public UserInfoDTO getUserLoginInfo(LoginRequestDTO loginRequest) {
         return loginMapper.selectUserLogin(loginRequest);
     }// end getUserLoginInfo
+
+    public void updateUserLoginDate(Map<String, Object> params) {
+        loginMapper.updateUserLoginDate(params);
+    }// end updateUserLoginDate
 
 }// class

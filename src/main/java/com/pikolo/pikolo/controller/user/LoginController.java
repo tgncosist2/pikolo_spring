@@ -56,7 +56,7 @@ public class LoginController {
                 // JWT 토큰을 쿠키에 저장
                 Cookie cookie = new Cookie("token", token);
                 cookie.setHttpOnly(true);
-                cookie.setSecure(false); // 개발 환경에서는 false, 운영 환경에서는 true로 설정
+                cookie.setSecure(true); // 개발 환경에서는 false, 운영 환경에서는 true로 설정
                 cookie.setPath("/");
                 cookie.setMaxAge(60 * 60 * 1); // 1시간 동안 유효
 
@@ -98,7 +98,7 @@ public class LoginController {
         // 쿠키를 삭제하여 로그아웃 처리
         Cookie cookie = new Cookie("token", null);
         cookie.setHttpOnly(true);
-        cookie.setSecure(false); // 개발 환경에서는 false, 운영 환경에서는 true로 설정
+        cookie.setSecure(true); // 개발 환경에서는 false, 운영 환경에서는 true로 설정
         cookie.setPath("/");
         cookie.setMaxAge(0); // 쿠키 만료
 

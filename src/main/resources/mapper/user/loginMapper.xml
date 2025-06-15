@@ -6,11 +6,11 @@
 <mapper namespace="com.pikolo.pikolo.mapper.user.LoginDAO">
 <select id="selectUserLogin" resultType="com.pikolo.pikolo.dto.user.UserInfoDTO" parameterType="com.pikolo.pikolo.dto.user.LoginRequestDTO">
     SELECT * FROM USERS_ACCOUNT
-    WHERE USER_EMAIL = #{userEmail} AND USER_PASSWORD = #{userPassword}
+    WHERE USER_EMAIL = #{userEmail}
 </select>
 <update id="updateUserLoginDate" parameterType="java.util.Map">
     UPDATE USERS_ACCOUNT
-    SET LAST_LOGIN_IP = #{clientIp}, LAST_LOGIN_DATE = SYSDATE
+    SET LAST_LOGIN_IP = #{clientIp}, LAST_LOGIN_DATE = SYSTIMESTAMP
     WHERE USER_EMAIL = #{userEmail}
 </update>
 </mapper>

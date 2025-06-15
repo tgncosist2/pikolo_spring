@@ -82,7 +82,7 @@ public class LoginController {
     }// getClientIpAddress
 
     @GetMapping("/api/account/check")
-    public ResponseEntity check(@CookieValue(value="token", required=false) String token) {
+    public ResponseEntity<?> check(@CookieValue(value="token", required=false) String token) {
         Claims claims = jwtService.getClaims(token);
 
         if (claims != null) {
@@ -90,7 +90,7 @@ public class LoginController {
             return new ResponseEntity<>(id, HttpStatus.OK);
         }
         
-        return new ResponseEntity<>(null, HttpStatus.OK);
+        return new ResponseEntity<>("null", HttpStatus.OK);
     }
 
     @GetMapping("/api/user/logout")

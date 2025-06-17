@@ -17,7 +17,7 @@ public class OpenAIController {
     }
 
     @GetMapping("/api/chat")
-    public String chat(@RequestParam String prompt) {
+    public String chat(@RequestParam("prompt") String prompt) {
         // openAIService를 통해 getChatGptResponse 호출
         return openAIService.getChatGptResponse(prompt);  // 인스턴스를 통해 호출
     }

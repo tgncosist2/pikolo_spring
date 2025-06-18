@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ContentDTO {
-    private String title, description, category;
-    private int content_id;
+    private String title, description, category, imgPath;
+    private int contentId;
     private Date createdAt, updatedAt; 
 }

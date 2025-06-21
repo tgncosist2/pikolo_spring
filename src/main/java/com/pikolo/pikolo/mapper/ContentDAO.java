@@ -9,5 +9,7 @@ import com.pikolo.pikolo.dto.ContentDTO;
 
 @Mapper
 public interface ContentDAO {
-    List<ContentDTO> selectAllContent();
+    List<ContentDTO> selectAllContentKO();
+    List<ContentDTO> selectAllContentEN();
+    List<ContentDTO> selectAllContentJP();
 }

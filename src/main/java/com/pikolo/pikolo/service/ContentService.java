@@ -15,7 +15,16 @@ public class ContentService {
     @Autowired
     private ContentDAO contentMapper;
 
-    public List<ContentDTO> getAllContent() {
-        return contentMapper.selectAllContent();
+    public List<ContentDTO> getAllContent(String lang) {
+        switch (lang) {
+            case "ko":
+                return contentMapper.selectAllContentKO();
+            case "en":
+                return contentMapper.selectAllContentEN();
+            case "jp":
+                return contentMapper.selectAllContentJP();
+            default:
+                return contentMapper.selectAllContentKO();
+        }
     }
 }

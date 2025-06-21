@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pikolo.pikolo.dto.ContentDTO;
 import com.pikolo.pikolo.service.ContentService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 public class ContentController {
@@ -16,8 +17,8 @@ public class ContentController {
     private ContentService contentService;
 
     @GetMapping("/api/content")
-    public List<ContentDTO> getAllItems() {
-        return contentService.getAllContent();
+    public List<ContentDTO> getAllItems(@RequestParam("language") String lang) {
+        return contentService.getAllContent(lang);
     }
 }
 

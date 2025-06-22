@@ -6,6 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ContentDTO {
-    private String title, description, imgPath;
+    private String title, description, imgPath, type;
     private int contentId;
 }

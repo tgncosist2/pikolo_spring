@@ -13,4 +13,13 @@ SELECT * FROM CONTENT_EN WHERE CONTENT_ID = #{id}
 <select id="selectMindtestJP" resultType="com.pikolo.pikolo.dto.ContentDTO" parameterType="int">
 SELECT * FROM CONTENT_JP WHERE CONTENT_ID = #{id}
 </select>
+<select id="selectMindtestResultKO" resultType="com.pikolo.pikolo.dto.test.MindtestResultDTO" parameterType="int">
+SELECT * FROM PSY_TEST_RESULT_KO WHERE CONTENT_ID = #{contentId}
+</select>
+<select id="selectMindtestResultEN" resultType="com.pikolo.pikolo.dto.test.MindtestResultDTO" parameterType="int">
+SELECT * FROM PSY_TEST_RESULT_EN WHERE CONTENT_ID = #{contentId}
+</select>
+<select id="selectMindtestResultJP" resultType="com.pikolo.pikolo.dto.test.MindtestResultDTO" parameterType="int">
+SELECT * FROM PSY_TEST_RESULT_JP WHERE CONTENT_ID = #{contentId}
+</select>
 </mapper>

@@ -8,6 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @Service
 public class OpenAIService {
 
@@ -21,9 +24,11 @@ public class OpenAIService {
     private String model;
 
     private final RestTemplate restTemplate;
+    private final ObjectMapper objectMapper;
 
     public OpenAIService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
+        this.objectMapper = new ObjectMapper();  // Jackson ObjectMapper
     }
 
     public String getChatGptResponse(String prompt) {
@@ -43,12 +48,14 @@ public class OpenAIService {
 
         try {
             ResponseEntity<String> response = restTemplate.exchange(apiUrl, HttpMethod.POST, entity, String.class);
-            return response.getBody();
+            // JSON 문자열을 JsonNode로 변환
+            JsonNode responseJsonNode = objectMapper.readTree(response.getBody());
+            
+            // content만 추출하여 반환하기 위해 문자열로 변환
+            return responseJsonNode.path("choices").get(0).path("message").path("content").asText();
         } catch (Exception e) {
-            // 필요에 따라 로깅 및 예외처리
+            // 예외 처리
             return "{\"error\": \"OpenAI API 호출 실패: " + e.getMessage() + "\"}";
         }
-
     }
-
 }

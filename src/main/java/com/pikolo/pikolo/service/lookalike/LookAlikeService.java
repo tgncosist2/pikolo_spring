@@ -22,7 +22,7 @@ public class LookAlikeService {
 private LookAlikeDAO lookAlikeDAO;
 
 // 업로드 디렉토리 설정
-@Value("${app.upload.dir:./uploads/lookalike}")
+@Value("${app.upload.dir:/app/images/lookalike/uploads}")
 private String uploadDir;
 
 public String saveUploadedImage(MultipartFile file, String uploadId) throws IOException {

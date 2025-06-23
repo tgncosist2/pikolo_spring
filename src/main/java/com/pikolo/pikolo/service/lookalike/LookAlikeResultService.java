@@ -30,7 +30,7 @@ public class LookAlikeResultService {
     @Autowired
     private OpenAIService openAIService;
 
-    @Value("${app.upload.dir:./uploads/lookalike}")
+    @Value("${app.upload.dir:/app/images/lookalike/uploads}")
     private String uploadDir;
 
     LookAlikeResultService(SecurityConfig securityConfig) {
@@ -155,53 +155,61 @@ public class LookAlikeResultService {
     private LookAlikeResultDTO parseAiResponseToDTO(String aiResponse, String uploadId, String imagePath) {
         try {
             // ✨ "죄송합니다" 같은 거부 답변 감지
-            if (aiResponse.contains("죄송") || aiResponse.contains("도와드릴 수 없") || 
-                aiResponse.contains("식별할 수 없") || aiResponse.length() < 50) {
-                
+            if (aiResponse.contains("죄송") || aiResponse.contains("도와드릴 수 없") ||
+                    aiResponse.contains("식별할 수 없") || aiResponse.length() < 50) {
+
                 System.out.println("OpenAI가 분석을 거부함. 랜덤 결과 생성: " + aiResponse);
                 return createRandomLookalikeResult(uploadId, imagePath);
             }
-    
+
             ObjectMapper mapper = new ObjectMapper();
             String jsonPart = extractJsonFromResponse(aiResponse);
             JsonNode jsonNode = mapper.readTree(jsonPart);
-    
+
             LookAlikeResultDTO dto = new LookAlikeResultDTO();
             dto.setName(jsonNode.get("name").asText());
             dto.setAge(jsonNode.get("age").asInt());
             dto.setActor(jsonNode.get("actor").asText());
             dto.setScore(jsonNode.get("score").asText());
-            
-            String fileName = Paths.get(imagePath).getFileName().toString();
-            dto.setOriginalImagePath("/images/lookalike/" + fileName);
-            
+
+            String webImagePath = convertToWebPath(imagePath, uploadId);
+            dto.setOriginalImagePath(webImagePath);
+
             dto.setKoreanName(jsonNode.get("koreanName").asText());
             dto.setKoreanAge(jsonNode.get("koreanAge").asInt());
             dto.setKoreanActor(jsonNode.get("koreanActor").asText());
-    
+
             String celebrityImageUrl = getImageSearch(dto.getKoreanName(), dto.getKoreanActor());
             dto.setResultImageUrl(celebrityImageUrl);
-    
+
             return dto;
-    
+
         } catch (Exception e) {
             System.out.println("AI 응답 파싱 실패: " + e.getMessage());
             return createRandomLookalikeResult(uploadId, imagePath);
         }
     }
 
+    private String convertToWebPath(String filePath, String uploadId) {
+        // 파일명 추출 (uploadId + 확장자)
+        String fileName = Paths.get(filePath).getFileName().toString();
+
+        // 웹에서 접근 가능한 URL로 변환
+        return "/images/lookalike/uploads/" + fileName;
+    }
+
     private LookAlikeResultDTO createRandomLookalikeResult(String uploadId, String imagePath) {
         // 인기 연예인 목록
-        String[] celebrities = {"아이유", "박보영", "수지", "한지민", "김고은", "박서준", "차은우", "송중기", "현빈", "박보검"};
-        String[] occupations = {"가수/배우", "배우", "가수", "모델/배우", "아이돌/배우"};
-        
+        String[] celebrities = { "아이유", "박보영", "수지", "한지민", "김고은", "박서준", "차은우", "송중기", "현빈", "박보검" };
+        String[] occupations = { "가수/배우", "배우", "가수", "모델/배우", "아이돌/배우" };
+
         // 랜덤 선택
         Random random = new Random();
         String selectedCelebrity = celebrities[random.nextInt(celebrities.length)];
         String selectedOccupation = occupations[random.nextInt(occupations.length)];
         int randomAge = 25 + random.nextInt(15); // 25-40세
         int randomScore = 70 + random.nextInt(25); // 70-95점
-        
+
         LookAlikeResultDTO dto = new LookAlikeResultDTO();
         dto.setName(selectedCelebrity);
         dto.setAge(randomAge);
@@ -210,15 +218,15 @@ public class LookAlikeResultService {
         dto.setKoreanName(selectedCelebrity);
         dto.setKoreanAge(randomAge);
         dto.setKoreanActor(selectedOccupation);
-        
+
         String fileName = Paths.get(imagePath).getFileName().toString();
         dto.setOriginalImagePath("/images/lookalike/" + fileName);
-        
+
         String celebrityImageUrl = getImageSearch(selectedCelebrity, selectedOccupation);
         dto.setResultImageUrl(celebrityImageUrl);
-        
+
         System.out.println("랜덤 생성된 결과: " + selectedCelebrity + " (" + randomScore + "점)");
-        
+
         return dto;
     }
 

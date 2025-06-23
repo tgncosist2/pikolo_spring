@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pikolo.pikolo.mapper.test.QuestionDAO">
+
+    <!-- RESULT MAP 및 collection 태그로 List<ChoiceDTO> 매핑 -->
+    <resultMap id="QuestionWithChoicesMap" type="com.pikolo.pikolo.dto.test.QuestionDTO">
+        <id property="questionId" column="question_id"/>
+        <result property="contentId" column="content_id"/>
+        <result property="questionNo" column="question_no"/>
+        <result property="questionText" column="question_text"/>
+        <collection property="choices" ofType="com.pikolo.pikolo.dto.test.ChoiceDTO">
+            <id property="choiceId" column="choice_id"/>
+            <result property="questionId" column="question_id"/>
+            <result property="choiceNo" column="choice_no"/>
+            <result property="choiceText" column="choice_text"/>
+            <result property="score" column="score"/>
+        </collection>
+    </resultMap>
+
+    <select id="selectTotalCount" resultType="int" parameterType="int">
+        SELECT COUNT(*) FROM PSY_TEST_QUESTION_KO WHERE CONTENT_ID = #{contentId}
+    </select>
+
+    <!-- 한국어  -->
+    <select id="selectQuestionKO" resultMap="QuestionWithChoicesMap" parameterType="int">
+        SELECT 
+            q.question_id,
+            q.content_id,
+            q.question_no,
+            q.question_text,
+            c.choice_id,
+            c.choice_no,
+            c.choice_text,
+            c.score
+        FROM PSY_TEST_QUESTION_KO q
+        INNER JOIN PSY_TEST_CHOICE_KO c ON q.question_id = c.question_id
+        WHERE q.content_id = #{contentId}
+        ORDER BY q.question_no ASC, c.choice_no ASC
+    </select>
+
+    <!-- 영어  -->
+    <select id="selectQuestionEN" resultMap="QuestionWithChoicesMap" parameterType="int">
+        SELECT 
+            q.question_id,
+            q.content_id,
+            q.question_no,
+            q.question_text,
+            c.choice_id,
+            c.choice_no,
+            c.choice_text,
+            c.score
+        FROM PSY_TEST_QUESTION_EN q
+        INNER JOIN PSY_TEST_CHOICE_EN c ON q.question_id = c.question_id
+        WHERE q.content_id = #{contentId}
+        ORDER BY q.question_no ASC, c.choice_no ASC
+    </select>
+
+    <!-- 일본어  -->
+    <select id="selectQuestionJP" resultMap="QuestionWithChoicesMap" parameterType="int">
+        SELECT 
+            q.question_id,
+            q.content_id,
+            q.question_no,
+            q.question_text,
+            c.choice_id,
+            c.choice_no,
+            c.choice_text,
+            c.score
+        FROM PSY_TEST_QUESTION_JP q
+        INNER JOIN PSY_TEST_CHOICE_JP c ON q.question_id = c.question_id
+        WHERE q.content_id = #{contentId}
+        ORDER BY q.question_no ASC, c.choice_no ASC
+    </select>
+</mapper>

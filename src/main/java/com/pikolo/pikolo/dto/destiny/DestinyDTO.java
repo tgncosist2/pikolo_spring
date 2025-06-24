@@ -20,4 +20,5 @@ public class DestinyDTO{
     private String affection;
     private String wealth;
     private String wealthAccumulation;
+    private String language;
 }

@@ -59,7 +59,7 @@ public class GeminiService {
     
             Map<String, Object> generationConfig = new HashMap<>();
             generationConfig.put("temperature", 0.4);
-            generationConfig.put("maxOutputTokens", 2000);
+            generationConfig.put("maxOutputTokens", 5000);
             requestBody.put("generationConfig", generationConfig);
     
             String jsonBody = objectMapper.writeValueAsString(requestBody);
@@ -129,7 +129,7 @@ public class GeminiService {
             // 생성 설정
             Map<String, Object> generationConfig = new HashMap<>();
             generationConfig.put("temperature", 0.4);
-            generationConfig.put("maxOutputTokens", 2000);
+            generationConfig.put("maxOutputTokens", 5000);
             requestBody.put("generationConfig", generationConfig);
             
             String jsonBody = objectMapper.writeValueAsString(requestBody);

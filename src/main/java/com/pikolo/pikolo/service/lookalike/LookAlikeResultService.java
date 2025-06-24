@@ -11,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import com.pikolo.pikolo.config.SecurityConfig;
 import com.pikolo.pikolo.dto.lookalike.LookAlikeResultDTO;
-import com.pikolo.pikolo.service.springbootchatgpt.OpenAIService;
+import com.pikolo.pikolo.service.springbootGemini.GeminiService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -28,9 +28,9 @@ public class LookAlikeResultService {
     private final SecurityConfig securityConfig;
 
     @Autowired
-    private OpenAIService openAIService;
+    private GeminiService geminiService;
 
-    @Value("${app.upload.dir:/app/images/lookalike/uploads}")
+    @Value("${app.upload.dir:/app/images/uploads}")
     private String uploadDir;
 
     LookAlikeResultService(SecurityConfig securityConfig) {
@@ -56,7 +56,7 @@ public class LookAlikeResultService {
             System.out.println("Language: " + language);
             System.out.println("Prompt: " + prompt);
 
-            String aiResponse = openAIService.getChatGptVisionResponse(prompt, imagePath);
+            String aiResponse = geminiService.getGeminiVisionResponse(prompt, imagePath);
 
             System.out.println("=== AI 응답 결과 ===");
             System.out.println(aiResponse);
@@ -110,44 +110,49 @@ public class LookAlikeResultService {
     // 언어별 프롬프트 생성
     private String createPrompt(String language) {
         StringBuilder prompt = new StringBuilder();
-
-        prompt.append("이 사진의 인물이 가진 얼굴 특징을 분석해서 ");
-        prompt.append("비슷한 스타일을 가진 한국 엔터테인먼트 캐릭터나 유명한 스타일을 찾아주세요. ");
-        prompt.append("이것은 재미를 위한 스타일 매칭 게임입니다.\n\n");
-
-        prompt.append("다음 JSON 형식으로 답변해주세요:\n");
+    
+        prompt.append("Analyze the facial characteristics in the photo and ");
+        prompt.append("find a Korean entertainment celebrity or famous character whose style is similar. ");
+        prompt.append("This is a fun style-matching game for entertainment purposes.\n\n");
+    
+        prompt.append("If there is not enough data, or the analysis is difficult, ");
+        prompt.append("use your imagination to select the best-fitting Korean celebrity or character. ");
+        prompt.append("Always respond only with a JSON object, without any explanations or extra text. ");
+        prompt.append("Creatively match a celebrity or character with a similar vibe. ");
+        prompt.append("If you lack actual data, feel free to invent fun fictional details.\n\n");
+    
+        prompt.append("Give your answer ONLY in the following JSON format (no explanations):\n");
         prompt.append("{\n");
-        prompt.append("  \"name\": \"스타일이 비슷한 연예인 이름\",\n");
-        prompt.append("  \"age\": 나이숫자,\n");
-        prompt.append("  \"actor\": \"직업\",\n");
-        prompt.append("  \"score\": \"유사도점수\",\n");
-        prompt.append("  \"koreanName\": \"한국어이름\",\n");
-        prompt.append("  \"koreanAge\": 나이숫자,\n");
-        prompt.append("  \"koreanActor\": \"한국어직업\"\n");
+        prompt.append("  \"name\": \"Name of a celebrity or character with similar style\",\n");
+        prompt.append("  \"age\": Age (number, estimated or fictional),\n");
+        prompt.append("  \"actor\": \"Profession or character type\",\n");
+        prompt.append("  \"score\": \"Similarity score (0 to 100, can be fictional)\",\n");
+        prompt.append("  \"koreanName\": \"Korean name in Hangul\",\n");
+        prompt.append("  \"koreanAge\": Age in number (Hangul),\n");
+        prompt.append("  \"koreanActor\": \"Profession or character type in Hangul\"\n");
         prompt.append("}\n\n");
-
-        prompt.append("이것은 엔터테인먼트 목적의 스타일 분석입니다. ");
-        prompt.append("얼굴의 형태, 눈매, 인상 등을 종합해서 비슷한 느낌의 연예인을 추천해주세요.\n");
-
+    
+        prompt.append("IMPORTANT: Output ONLY a single JSON object, never any other text or comments.\n\n");
+    
         switch (language) {
             case "ko":
-                prompt.append("한국어로 답변해주세요. ");
-                prompt.append("koreanName과 koreanActor는 반드시 한글로 작성해주세요.\n");
+                prompt.append("All field values must be in Korean (Hangul). ");
+                prompt.append("koreanName and koreanActor must also be in Hangul.\n");
                 break;
             case "en":
-                prompt.append("Please answer in English. ");
-                prompt.append("However, koreanName and koreanActor must be written in Korean (한글).\n");
+                prompt.append("All field values must be in English. ");
+                prompt.append("However, koreanName and koreanActor must be written in Korean (Hangul).\n");
                 break;
             case "jp":
-                prompt.append("日本語で答えてください。");
-                prompt.append("ただし、koreanNameとkoreanActorは必ず韓国語（한글）で書いてください。\n");
+                prompt.append("すべてのフィールド値は日本語で記入してください。");
+                prompt.append("ただし、koreanName と koreanActor は必ずハングルで記入してください。\n");
                 break;
             default:
-                prompt.append("한국어로 답변해주세요. ");
-                prompt.append("koreanName과 koreanActor는 반드시 한글로 작성해주세요.\n");
+                prompt.append("All field values must be in Korean (Hangul). ");
+                prompt.append("koreanName and koreanActor must also be in Hangul.\n");
                 break;
         }
-
+    
         return prompt.toString();
     }
 
@@ -158,7 +163,7 @@ public class LookAlikeResultService {
             if (aiResponse.contains("죄송") || aiResponse.contains("도와드릴 수 없") ||
                     aiResponse.contains("식별할 수 없") || aiResponse.length() < 50) {
 
-                System.out.println("OpenAI가 분석을 거부함. 랜덤 결과 생성: " + aiResponse);
+                System.out.println("Gemini API가 분석을 거부함. 랜덤 결과 생성: " + aiResponse);
                 return createRandomLookalikeResult(uploadId, imagePath);
             }
 

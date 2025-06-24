@@ -80,6 +80,13 @@ public class LookAlikeController {
                         .body(Map.of("error", "파일이 비어있습니다."));
             }
 
+            int maxFileSize = 10 * 1024 * 1024; // 10MB
+            if (file.getSize() > maxFileSize) {
+                System.out.println(file.getSize());
+                return ResponseEntity.status(HttpStatus.PAYLOAD_TOO_LARGE)
+                        .body(Map.of("error", "파일 크기가 너무 큽니다."));
+            }
+
             // 파일 타입 검증
             String contentType = file.getContentType();
             if (!isValidImageType(contentType)) {
@@ -118,6 +125,8 @@ public class LookAlikeController {
     private boolean isValidImageType(String contentType) {
         return contentType != null && (contentType.equals("image/jpeg") ||
                 contentType.equals("image/jpg") ||
+                contentType.equals("image/heic") ||
+                contentType.equals("image/heif") ||
                 contentType.equals("image/png"));
     }
 

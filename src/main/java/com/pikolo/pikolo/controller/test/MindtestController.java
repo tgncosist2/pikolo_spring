@@ -38,7 +38,7 @@ public class MindtestController {
     }
 
     @GetMapping("/api/mindtest/result")
-    public MindtestResultDTO selectMindtestResult(@RequestParam("id") int contentId, @RequestParam("score") int score, @RequestParam("language") String language) {
-        return mindtestService.selectMindtestResult(contentId, score, language);
+    public MindtestResultDTO selectMindtestResult(int id, int score, String language) {
+        return mindtestService.selectMindtestResult(id, score, language);
     }
 }

@@ -59,8 +59,8 @@ public class LookAlikeResultService {
             // 4. JSON 파싱하여 DTO 생성
             LookAlikeResultDTO result = parseAiResponseToDTO(aiResponse, uploadId, imagePath);
 
-            // 5. 분석 완료 후 임시 파일 삭제 (옵션)
-            deleteTemporaryFile(uploadId);
+            // 5. 분석 완료 후 임시 파일 삭제 (옵션) 일단 임시로 주석처리
+            // deleteTemporaryFile(uploadId);
 
             return result;
 

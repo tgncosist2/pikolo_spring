@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
-import com.pikolo.pikolo.config.SecurityConfig;
 import com.pikolo.pikolo.dto.lookalike.LookAlikeResultDTO;
 import com.pikolo.pikolo.service.springbootGemini.GeminiService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -287,14 +286,16 @@ public class LookAlikeResultService {
             String searchQuery = actor + " " + name;
 
             // URI 구성
-            URI uri = UriComponentsBuilder.fromHttpUrl(apiUrl)
-                    .queryParam("query", searchQuery)
-                    .queryParam("display", 1) // 첫 번째 이미지만
-                    .queryParam("start", 1)
-                    .queryParam("sort", "sim") // 유사도순
-                    .queryParam("filter", "large") // 큰 이미지 우선
-                    .encode()
-                    .build().toUri();
+            URI uri = UriComponentsBuilder
+            .fromUriString(apiUrl) // 최신 방식: fromUriString() 사용
+            .queryParam("query", searchQuery)
+            .queryParam("display", 1)
+            .queryParam("start", 1)
+            .queryParam("sort", "sim")
+            .queryParam("filter", "large")
+            .encode()
+            .build()
+            .toUri();
 
             // 헤더 설정
             HttpHeaders headers = new HttpHeaders();

@@ -25,17 +25,12 @@ import java.net.URI;
 @Service
 public class LookAlikeResultService {
 
-    private final SecurityConfig securityConfig;
 
     @Autowired
     private GeminiService geminiService;
 
     @Value("${app.upload.dir:/app/images/uploads}")
     private String uploadDir;
-
-    LookAlikeResultService(SecurityConfig securityConfig) {
-        this.securityConfig = securityConfig;
-    }
 
     public LookAlikeResultDTO getLookAlikeResult(String uploadId, String language) {
 

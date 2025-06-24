@@ -20,7 +20,7 @@ public class LookAlikeService {
     @Autowired
     private LookAlikeDAO lookAlikeDAO;
 
-    @Value("${app.upload.dir:/app/images/uploads}")
+    @Value("${app.upload.dir:/app/images/lookalike/uploads}")
     private String uploadDir;
 
     public String saveUploadedImage(MultipartFile file, String uploadId) throws IOException {

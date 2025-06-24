@@ -28,7 +28,7 @@ public class LookAlikeResultService {
     @Autowired
     private GeminiService geminiService;
 
-    @Value("${app.upload.dir:/app/images/uploads}")
+    @Value("${app.upload.dir:/app/images/lookalike/uploads}")
     private String uploadDir;
 
     public LookAlikeResultDTO getLookAlikeResult(String uploadId, String language) {

@@ -5,12 +5,12 @@
 
 <mapper namespace="com.pikolo.pikolo.mapper.ContentDAO">
     <select id="selectAllContentKO" resultType="com.pikolo.pikolo.dto.ContentDTO">
-        SELECT * from content_ko
+        SELECT * from content_ko order by content_id desc
     </select>
     <select id="selectAllContentEN" resultType="com.pikolo.pikolo.dto.ContentDTO">
-        SELECT * from content_en
+        SELECT * from content_en order by content_id desc
     </select>
     <select id="selectAllContentJP" resultType="com.pikolo.pikolo.dto.ContentDTO">
-        SELECT * from content_jp
+        SELECT * from content_jp order by content_id desc
     </select>
 </mapper>

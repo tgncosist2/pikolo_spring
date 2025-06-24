@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.pikolo.pikolo.dto.ContentDTO;
@@ -128,6 +130,16 @@ public class LookAlikeController {
                 contentType.equals("image/heic") ||
                 contentType.equals("image/heif") ||
                 contentType.equals("image/png"));
+    }
+
+    @GetMapping("/api/proxyImage")
+    public ResponseEntity<byte[]> proxyImage(@RequestParam String url) {
+        // url의 유효성, 화이트리스트 필수! (악의적 요청 방지)
+    RestTemplate restTemplate = new RestTemplate();
+    ResponseEntity<byte[]> response = restTemplate.getForEntity(url, byte[].class);
+    HttpHeaders headers = new HttpHeaders();
+    headers.setContentType(response.getHeaders().getContentType());
+    return new ResponseEntity<>(response.getBody(), headers, HttpStatus.OK);
     }
 
 }

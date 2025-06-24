@@ -87,13 +87,6 @@ public class LookAlikeController {
                         .body(Map.of("error", "지원하지 않는 파일 형식입니다."));
             }
 
-            // 파일 크기 검증 (10MB = 10 * 1024 * 1024 bytes)
-            long maxSize = 10 * 1024 * 1024;
-            if (file.getSize() > maxSize) {
-                return ResponseEntity.status(HttpStatus.PAYLOAD_TOO_LARGE)
-                        .body(Map.of("error", "파일 크기가 너무 큽니다."));
-            }
-
             // 고유한 업로드 ID 생성
             String uploadId = UUID.randomUUID().toString();
 

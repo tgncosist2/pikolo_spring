@@ -102,54 +102,41 @@ public class LookAlikeResultService {
         }
     }
 
-    // 언어별 프롬프트 생성
     private String createPrompt(String language) {
         StringBuilder prompt = new StringBuilder();
-    
-        prompt.append("Analyze the facial characteristics in the photo and ");
-        prompt.append("find a Korean entertainment celebrity or famous character whose style is similar. ");
-        prompt.append("This is a fun style-matching game for entertainment purposes.\n\n");
-    
-        prompt.append("If there is not enough data, or the analysis is difficult, ");
-        prompt.append("use your imagination to select the best-fitting Korean celebrity or character. ");
-        prompt.append("Always respond only with a JSON object, without any explanations or extra text. ");
-        prompt.append("Creatively match a celebrity or character with a similar vibe. ");
-        prompt.append("If you lack actual data, feel free to invent fun fictional details.\n\n");
-    
-        prompt.append("Give your answer ONLY in the following JSON format (no explanations):\n");
+        
+        prompt.append("Analyze the photo and match with a Korean celebrity/character for fun. ");
+        prompt.append("Use accurate age information for the celebrity. ");
+        prompt.append("Be honest with similarity score - if no good match exists, use low scores (20-40). ");
+        prompt.append("Only give high scores (80-100) for very similar matches. ");
+        prompt.append("Always respond ONLY in JSON format:\n");
         prompt.append("{\n");
-        prompt.append("  \"name\": \"Name of a celebrity or character with similar style\",\n");
-        prompt.append("  \"age\": Age (number, estimated or fictional),\n");
-        prompt.append("  \"actor\": \"Profession or character type\",\n");
-        prompt.append("  \"score\": \"Similarity score (0 to 100, can be fictional)\",\n");
-        prompt.append("  \"koreanName\": \"Korean name in Hangul\",\n");
-        prompt.append("  \"koreanAge\": Age in number (Hangul),\n");
-        prompt.append("  \"koreanActor\": \"Profession or character type in Hangul\"\n");
-        prompt.append("}\n\n");
-    
-        prompt.append("IMPORTANT: Output ONLY a single JSON object, never any other text or comments.\n\n");
-    
+        prompt.append("  \"name\": \"Celebrity name\",\n");
+        prompt.append("  \"age\": Korean age number (accurate current age),\n");
+        prompt.append("  \"actor\": \"Profession\",\n");
+        prompt.append("  \"score\": 0-100 (number only, be realistic with scoring),\n");
+        prompt.append("  \"koreanName\": \"한글 이름\",\n");
+        prompt.append("  \"koreanAge\": Korean age number (accurate current age),\n");
+        prompt.append("  \"koreanActor\": \"한글 직업\"\n");
+        prompt.append("}\n");
+        
+        // 언어별 간단한 지시사항
         switch (language) {
             case "ko":
-                prompt.append("All field values must be in Korean (Hangul). ");
-                prompt.append("koreanName and koreanActor must also be in Hangul.\n");
+                prompt.append("모든 JSON Value 값은 한국어로 작성. 연예인의 정확한 나이 정보 사용. 닮지 않으면 낮은 점수(20-40점)도 가능.");
                 break;
             case "en":
-                prompt.append("All field values must be in English. ");
-                prompt.append("However, koreanName and koreanActor must be written in Korean (Hangul).\n");
+                prompt.append("Values in English, koreanName/koreanActor in Hangul. Use accurate celebrity age. Low scores (20-40) OK if not similar.");
                 break;
             case "jp":
-                prompt.append("すべてのフィールド値は日本語で記入してください。");
-                prompt.append("ただし、koreanName と koreanActor は必ずハングルで記入してください。\n");
-                break;
-            default:
-                prompt.append("All field values must be in Korean (Hangul). ");
-                prompt.append("koreanName and koreanActor must also be in Hangul.\n");
+                prompt.append("日本語で記入、koreanName/koreanActorはハングル。正確な年齢情報を使用。似ていない場合は低いスコア(20-40)も可能。");
                 break;
         }
-    
+        
         return prompt.toString();
     }
+    
+    
 
     // AI 응답을 DTO로 파싱
     private LookAlikeResultDTO parseAiResponseToDTO(String aiResponse, String uploadId, String imagePath) {

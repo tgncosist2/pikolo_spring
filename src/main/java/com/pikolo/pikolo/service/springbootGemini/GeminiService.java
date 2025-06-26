@@ -58,7 +58,7 @@ public class GeminiService {
             requestBody.put("contents", contents);
     
             Map<String, Object> generationConfig = new HashMap<>();
-            generationConfig.put("temperature", 0.4);
+            generationConfig.put("temperature", 1.2);
             generationConfig.put("maxOutputTokens", 5000);
             requestBody.put("generationConfig", generationConfig);
     

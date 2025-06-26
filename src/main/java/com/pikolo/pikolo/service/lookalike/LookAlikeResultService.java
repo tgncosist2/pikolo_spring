@@ -89,18 +89,18 @@ public class LookAlikeResultService {
         }
     }
 
-    // 기존 LookAlikeService와 동일한 로직으로 임시 파일 삭제
-    private void deleteTemporaryFile(String uploadId) {
-        String imagePath = getImagePath(uploadId);
-        if (imagePath != null) {
-            try {
-                Files.deleteIfExists(Paths.get(imagePath));
-                System.out.println("임시 파일 삭제 완료: " + imagePath);
-            } catch (IOException e) {
-                System.err.println("임시 파일 삭제 실패: " + e.getMessage());
-            }
-        }
-    }
+    // // 기존 LookAlikeService와 동일한 로직으로 임시 파일 삭제
+    // private void deleteTemporaryFile(String uploadId) {
+    //     String imagePath = getImagePath(uploadId);
+    //     if (imagePath != null) {
+    //         try {
+    //             Files.deleteIfExists(Paths.get(imagePath));
+    //             System.out.println("임시 파일 삭제 완료: " + imagePath);
+    //         } catch (IOException e) {
+    //             System.err.println("임시 파일 삭제 실패: " + e.getMessage());
+    //         }
+    //     }
+    // }
 
     private String createPrompt(String language) {
         StringBuilder prompt = new StringBuilder();

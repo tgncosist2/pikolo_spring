@@ -187,8 +187,8 @@ public class LookAlikeResultService {
 
     private LookAlikeResultDTO createRandomLookalikeResult(String uploadId, String imagePath) {
         // 인기 연예인 목록
-        String[] celebrities = { "아이유", "박보영", "수지", "한지민", "김고은", "박서준", "차은우", "송중기", "현빈", "박보검" };
-        String[] occupations = { "가수/배우", "배우", "가수", "모델/배우", "아이돌/배우" };
+        String[] celebrities = { "전원주", "나문희", "선우용녀", "김영옥", "윤정희", "이순재", "신구", "노주현", "김구", "윤봉길" };
+        String[] occupations = { "가수", "배우", "모델", "아이돌" };
 
         // 랜덤 선택
         Random random = new Random();

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pikolo.pikolo.mapper.board.BoardDAO">
+    <select id="selectBoardListKo" resultType="com.pikolo.pikolo.dto.board.BoardDTO">
+        SELECT * FROM board_ko ORDER BY created_at DESC
+    </select>
+    <select id="selectBoardListEn" resultType="com.pikolo.pikolo.dto.board.BoardDTO">
+        SELECT * FROM board_en ORDER BY created_at DESC
+    </select>
+    <select id="selectBoardListJp" resultType="com.pikolo.pikolo.dto.board.BoardDTO">
+        SELECT * FROM board_jp ORDER BY created_at DESC
+    </select>
+</mapper>

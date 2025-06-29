@@ -23,22 +23,22 @@ public class MindtestController {
     private QuestionService questionService;
 
     @GetMapping("/api/mindtest")
-    public ContentDTO selectMindtest(@RequestParam int id, @RequestParam String language) {
+    public ContentDTO selectMindtest(@RequestParam("id") int id, @RequestParam("language") String language) {
         return mindtestService.selectMindtest(id, language);
     }
 
     @GetMapping("/api/mindtest/question/total")
-    public Integer selectMindtestQuestionTotal(@RequestParam int id) {
+    public Integer selectMindtestQuestionTotal(@RequestParam("id") int id) {
         return questionService.getTotalQuestionCount(id);
     }
 
     @GetMapping("/api/mindtest/question")
-    public List<QuestionDTO> selectMindtestQuestion(@RequestParam int id, @RequestParam String language) {
+    public List<QuestionDTO> selectMindtestQuestion(@RequestParam("id") int id, @RequestParam("language") String language) {
         return questionService.getQuestions(id, language);
     }
 
     @GetMapping("/api/mindtest/result")
-    public MindtestResultDTO selectMindtestResult(int id, int score, String language) {
+    public MindtestResultDTO selectMindtestResult(@RequestParam("id") int id, @RequestParam("score") int score, @RequestParam("language") String language) {
         return mindtestService.selectMindtestResult(id, score, language);
     }
 }

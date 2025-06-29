@@ -39,13 +39,13 @@ public class LookAlikeController {
     }
 
     @GetMapping("/api/lookalike")
-    public ContentDTO getLookAlike(@RequestParam int id, @RequestParam String language) {
+    public ContentDTO getLookAlike(@RequestParam("id") int id, @RequestParam("language") String language) {
         return lookAlikeService.searchLookAlike(id, language);
     }
 
     // 이미지 분석
     @GetMapping("/api/lookalike/result")
-    public LookAlikeResultDTO getLookAlikeResult(@RequestParam String uploadId, @RequestParam String language) {
+    public LookAlikeResultDTO getLookAlikeResult(@RequestParam("uploadId") String uploadId, @RequestParam("language") String language) {
 
         try {
             // LookAlikeResultService 의존성 주입 필요 (클래스 상단에)
@@ -133,7 +133,7 @@ public class LookAlikeController {
     }
 
     @GetMapping("/api/proxyImage")
-    public ResponseEntity<byte[]> proxyImage(@RequestParam String url) {
+    public ResponseEntity<byte[]> proxyImage(@RequestParam("url") String url) {
         // url의 유효성, 화이트리스트 필수! (악의적 요청 방지)
     RestTemplate restTemplate = new RestTemplate();
     ResponseEntity<byte[]> response = restTemplate.getForEntity(url, byte[].class);

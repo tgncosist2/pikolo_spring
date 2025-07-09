@@ -21,6 +21,10 @@
 > ### 강태일(tgncosist2)
 >
 > Back-End 개발
+> 
+> ### 심규민()
+>
+> Back-End 개발
 
 ## ⚙️ 기술스택
 > ### Back End

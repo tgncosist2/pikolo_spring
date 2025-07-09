@@ -1,28 +1,43 @@
 # pikolo_spring
 
-'pikolo.life' 백엔드
+'pikolo.life' Back-End
 
-## 프로젝트 설명
+## 📌 목차
+1. [개요](#-개요-)
+2. [개발기간](#-개발기간-)
+3. [멤버구성](#-멤버구성)
+4. [기술스택](#-기술스택-)
+5. [ERD Diagram](#ERD-Diagram)
 
-이 레포지토리는 pikolo.life 프로젝트의 백엔드 소스 코드를 포함하고 있습니다.
-Java와 Gradle을 사용하여 빌드되었습니다.
+## 🖥️ 개요
+> 프로젝트 이름: pikolo_spring
+> 'pikolo.life'의 백엔드 프로젝트입니다.
+> Spring Boot를 기반으로 한 RESTful API 서버입니다.
 
-## 빌드 및 실행 방법
+## 🕰️ 개발기간
+> (개발 기간을 여기에 작성해주세요)
 
-1.  **레포지토리 클론:**
-    ```bash
-    git clone https://github.com/tgncosist2/pikolo_spring.git
-    ```
-2.  **프로젝트 빌드:**
-    ```bash
-    ./gradlew build
-    ```
-3.  **애플리케이션 실행:**
-    (애플리케이션 실행 방법을 여기에 기재해주세요)
+## 🧑‍🤝‍🧑 멤버구성
+> ### 강태일(tgncosist2)
+>
+> Back-End 개발
 
-## 프로젝트 구조
+## ⚙️ 기술스택
+> ### Back End
+>
+> ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
+> ![Spring Boot](https://img.shields.io/badge/spring%20boot-%236DB33F.svg?style=for-the-badge&logo=spring-boot&logoColor=white)
+> ![Mybatis](https://img.shields.io/badge/Mybatis-FFFFFF?style=for-the-badge&logo=Mybatis&logoColor=#7D929E)
+> ![Lombok](https://img.shields.io/badge/Lombok-%23CC0000.svg?style=for-the-badge&logo=ruby-on-rails&logoColor=white)
+>
+> ### DataBase
+>
+> ![Oracle DataBase 19c](https://img.shields.io/badge/Oracle%20DataBase%2019c-F80000?style=for-the-badge&logo=oracle&logoColor=white)
+>
+> ### Environment
+>
+> #### Build tools ![Gradle](https://img.shields.io/badge/Gradle-02303A.svg?style=for-the-badge&logo=Gradle&logoColor=white)
+> #### Version control ![Git](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white) ![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)
 
-- **gradle/**: Gradle 래퍼 파일
-- **src/**: 소스 코드
-- **build.gradle**: Gradle 빌드 스크립트
-- **settings.gradle**: Gradle 설정
+## ERD Diagram
+> (ERD 다이어그램을 여기에 추가해주세요)
